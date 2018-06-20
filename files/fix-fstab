@@ -1,0 +1,10 @@
+#!/bin/bash
+
+sed -i -e '/tmp/d' /etc/fstab
+
+for device in "$@"; do
+	mp=$(lsblk -o MOUNTPOINT -nr ${device})
+	uuid=$(blkid ${device} -o export | grep UUID)
+	sed -i -e "/${uuid}/d" /etc/fstab
+	echo ${uuid} ${mp} ext4 noexec,nosuid,nodev 0 2 >> /etc/fstab
+done

@@ -1,0 +1,43 @@
+#!/bin/bash
+
+if [[ $# -ne 2 ]]; then
+        echo "Usage: ./setup-network.sh <public interface> <private interface>"
+        exit 1
+fi
+
+cidr=$(ip addr show dev $1 | grep 'inet .*global' | awk '{ print $2 }')
+
+ipaddress=$(ipcalc ${cidr} | grep ^Address: | awk '{print $2}')
+netmask=$(ipcalc ${cidr} | grep ^Netmask: | awk '{print $2}')
+broadcast=$(ipcalc ${cidr} | grep ^Broadcast: | awk '{print $2}')
+gateway=$(ip route list | grep default | head -n1 | awk '{ print $3 }')
+
+ip2=$(echo ${ipaddress} | awk -F/ '{ print $1 }' | awk -F. '{ print $2 }')
+ip3=$(echo ${ipaddress} | awk -F/ '{ print $1 }' | awk -F. '{ print $3 }')
+ip4=$(echo ${ipaddress} | awk -F/ '{ print $1 }' | awk -F. '{ print $4 }')
+local_ipaddress=10.${ip2}.${ip3}.${ip4}
+
+cat > /etc/network/interfaces <<EOF
+auto lo
+iface lo inet loopback
+
+auto $1
+iface $1 inet static
+        address ${ipaddress}
+        netmask ${netmask}
+        broadcast ${broadcast}
+        gateway ${gateway}
+
+auto $2
+iface $2 inet static
+        address ${local_ipaddress}
+        netmask 255.0.0.0
+        broadcast 10.255.255.255
+EOF
+
+ip -6 addr flush $1
+
+ip addr flush $2
+ip link set $2 up
+
+/etc/init.d/networking restart || :
