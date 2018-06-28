@@ -1,5 +1,5 @@
-include_recipe "sudo"
+include_recipe 'sudo'
 
-users_manage "sudo" do
+users_manage 'sudo' do
   action [:create, :remove]
 end

@@ -1,41 +1,41 @@
-include_recipe "ubuntu"
-include_recipe "apt"
+include_recipe 'ubuntu'
+include_recipe 'apt'
 
-package "needrestart"
+package 'needrestart'
 
-cookbook_file "/etc/needrestart/needrestart.conf" do
-  source "needrestart.conf"
-  owner "root"
-  group "root"
-  mode "0644"
+cookbook_file '/etc/needrestart/needrestart.conf' do
+  source 'needrestart.conf'
+  owner 'root'
+  group 'root'
+  mode '0644'
 end
 
-cookbook_file "/usr/sbin/lib_users" do
-  source "lib_users.py"
-  owner "root"
-  group "root"
-  mode "0755"
+cookbook_file '/usr/sbin/lib_users' do
+  source 'lib_users.py'
+  owner 'root'
+  group 'root'
+  mode '0755'
 end
 
-template "/usr/sbin/attended-upgrade" do
-  source "attended-upgrade.sh"
-  owner "root"
-  group "root"
-  mode "0755"
+template '/usr/sbin/attended-upgrade' do
+  source 'attended-upgrade.sh'
+  owner 'root'
+  group 'root'
+  mode '0755'
 end
 
-cookbook_file "/usr/sbin/setup-network" do
-  source "setup-network"
-  owner "root"
-  group "root"
-  mode "0755"
+cookbook_file '/usr/sbin/setup-network' do
+  source 'setup-network'
+  owner 'root'
+  group 'root'
+  mode '0755'
 end
 
-cookbook_file "/usr/sbin/fix-fstab" do
-  source "fix-fstab"
-  owner "root"
-  group "root"
-  mode "0755"
+cookbook_file '/usr/sbin/fix-fstab' do
+  source 'fix-fstab'
+  owner 'root'
+  group 'root'
+  mode '0755'
 end
 
 # cleanup some ubuntu cruft we don't need
@@ -99,5 +99,5 @@ end
   end
 end
 
-package "ubuntu-minimal"
-package "ubuntu-standard"
+package 'ubuntu-minimal'
+package 'ubuntu-standard'
