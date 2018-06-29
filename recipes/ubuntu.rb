@@ -1,7 +1,32 @@
+node.force_default['apt']['unattended_upgrades']['enable'] = true
+node.force_default['apt']['unattended_upgrades']['remove_unused_dependencies'] = true
+
+node.force_default['apt']['unattended_upgrades']['allowed_origins'] = [
+  '${distro_id}:${distro_codename}',
+  '${distro_id}:${distro_codename}-security',
+  '${distro_id}:${distro_codename}-updates',
+]
+
+node.force_default['apt']['unattended_upgrades']['package_blacklist'] = [
+  '^linux-.*tools-',
+  '^linux-headers-',
+  '^linux-image-',
+  '^linux-modules-',
+]
+
 include_recipe 'ubuntu'
 include_recipe 'apt'
 
-package 'needrestart'
+cookbook_file '/tmp/ubuntu-zenops_1.0_all.deb' do
+  source 'ubuntu-zenops_1.0_all.deb'
+  owner 'root'
+  group 'root'
+  mode '0644'
+end
+
+dpkg_package 'ubuntu-zenops' do
+  source '/tmp/ubuntu-zenops_1.0_all.deb'
+end
 
 cookbook_file '/etc/needrestart/needrestart.conf' do
   source 'needrestart.conf'
@@ -40,39 +65,18 @@ end
 
 # cleanup some ubuntu cruft we don't need
 purge_packages = %w(
-  apport
-  apport-symptoms
-  bcache-tools
   bind9
   bind9utils
-  btrfs-tools
-  byobu
-  cryptsetup
-  cryptsetup-bin
   eatmydata
-  fonts-ubuntu-font-family-console
   geoip-database
-  gir1.2-glib-2.0
-  open-iscsi
-  open-vm-tools
   openipmi
   os-prober
-  overlayroot
-  pastebinit
-  policykit-1
   powermgmt-base
-  python3-gi
-  screen
   snap-confine
-  snapd
-  software-properties-common
-  sosreport
   sshguard
   ubuntu-core-launcher
   xauth
   xdg-user-dirs
-  xfsprogs
-  zerofree
 )
 
 package purge_packages do
@@ -80,24 +84,10 @@ package purge_packages do
 end
 
 %w(
-  google-accounts-daemon
-  mdadm
-  smartd
-).each do |svc|
-  service svc do
-    action [:stop, :disable]
-  end
-end
-
-%w(
   /etc/skel/.profile
-  /etc/init.d/mdadm
   /etc/apt/sources.list.d/proposed.list
 ).each do |f|
   file f do
     action :delete
   end
 end
-
-package 'ubuntu-minimal'
-package 'ubuntu-standard'
