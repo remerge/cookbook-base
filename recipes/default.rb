@@ -27,7 +27,6 @@ include_recipe 'base::firewall'
 # basic system tools
 include_recipe 'build-essential'
 include_recipe 'base::java'
-include_recipe 'sysstat'
 
 # basic system services
 include_recipe 'base::syslog'
