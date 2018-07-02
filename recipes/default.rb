@@ -15,7 +15,6 @@ include_recipe 'systemd::timezone'
 include_recipe 'systemd::locale'
 include_recipe 'systemd::machine'
 include_recipe 'systemd::rtc'
-include_recipe 'systemd::vconsole'
 
 # platform specific resources
 include_recipe "base::#{node['platform']}"

@@ -24,8 +24,9 @@ cookbook_file '/tmp/ubuntu-zenops_1.0_all.deb' do
   mode '0644'
 end
 
-dpkg_package 'ubuntu-zenops' do
-  source '/tmp/ubuntu-zenops_1.0_all.deb'
+execute 'ubuntu-zenops' do
+  command 'apt-get install -y -f /tmp/ubuntu-zenops_1.0_all.deb'
+  not_if { Mixlib::ShellOut.new("dpkg-query --showformat='${Version}' --show ubuntu-zenops").run_command.stdout.strip == '1.0' }
 end
 
 cookbook_file '/etc/needrestart/needrestart.conf' do

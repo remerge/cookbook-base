@@ -1,5 +1,5 @@
-node.force_default['postfix']['main']['forward_path'] = '/etc/postfix/adminaddr'
-node.force_default['postfix']['main']['mydestination'] = []
+node.override['postfix']['main']['forward_path'] = '/etc/postfix/adminaddr'
+node.override['postfix']['main']['mydestination'] = []
 
 include_recipe 'postfix'
 include_recipe 'postfix::sasl_auth'

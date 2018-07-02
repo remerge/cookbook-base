@@ -48,7 +48,7 @@ ipv6_hosts.each do |host|
   end
 end
 
-node['system']['static_hosts'].each do |ip, host|
+node['resolver']['static_hosts'].each do |ip, host|
   hostsfile_entry ip do
     ip_address ip
     hostname host
