@@ -12,7 +12,7 @@ node.force_default['ohai']['disabled_plugins'] = [
 
 include_recipe 'chef-client::config'
 
-directory node[:chef_handler][:handler_path] do
+directory node['chef_handler']['handler_path'] do
   owner 'root'
   group 'root'
   mode '0755'
