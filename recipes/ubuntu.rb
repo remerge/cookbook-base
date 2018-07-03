@@ -17,17 +17,16 @@ node.force_default['apt']['unattended_upgrades']['package_blacklist'] = [
 include_recipe 'ubuntu'
 include_recipe 'apt'
 
-cookbook_file '/tmp/ubuntu-zenops_1.0_all.deb' do
-  source 'ubuntu-zenops_1.0_all.deb'
-  owner 'root'
-  group 'root'
-  mode '0644'
+apt_repository 'zenops-base' do
+  uri 'http://ppa.launchpad.net/zenops/base/ubuntu'
+  components ['main']
+  distribution node['lsb']['codename']
+  keyserver 'hkp://keyserver.ubuntu.com'
+  key '84876BA9E328F8C5'
+  action :add
 end
 
-execute 'ubuntu-zenops' do
-  command 'apt-get install -y -f /tmp/ubuntu-zenops_1.0_all.deb'
-  not_if { Mixlib::ShellOut.new("dpkg-query --showformat='${Version}' --show ubuntu-zenops").run_command.stdout.strip == '1.0' }
-end
+package 'zenops-base'
 
 cookbook_file '/etc/needrestart/needrestart.conf' do
   source 'needrestart.conf'
