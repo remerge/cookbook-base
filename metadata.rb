@@ -1,5 +1,5 @@
 name 'base'
-version '2.2.1'
+version '2.2.2'
 
 depends 'apt'
 depends 'build-essential'

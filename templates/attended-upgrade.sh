@@ -19,7 +19,7 @@ xapt update
 xapt dist-upgrade
 xapt dist-upgrade || exit 1
 <% if lxc? %>
-xapt purge linux-image-* linux-headers-* linux-tools-* linux-modules-* grub-common
+xapt purge linux-image-* linux-headers-* linux-tools-* linux-modules-* linux-firmware grub-common
 rm -rf /boot/grub
 <% else %>
 xapt install linux-{image,headers,tools}-generic-hwe-16.04-edge || exit 1
