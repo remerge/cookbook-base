@@ -1,5 +1,9 @@
-package "haveged"
+package 'haveged'
 
-service "haveged" do
-  action [:enable, :start]
+service 'haveged' do
+  if lxc?
+    action [:disable, :stop]
+  else
+    action [:enable, :start]
+  end
 end

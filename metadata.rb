@@ -1,11 +1,12 @@
 name 'base'
-version '2.1.1'
+version '2.2.0'
 
 depends 'apt'
 depends 'build-essential'
 depends 'chef-client'
 depends 'chef-ingredient'
 depends 'chef_handler'
+depends 'core_ext'
 depends 'cron'
 depends 'hostsfile'
 depends 'java'

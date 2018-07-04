@@ -6,13 +6,13 @@ include_recipe 'base::hostname'
 include_recipe 'base::resolver'
 include_recipe 'base::baselayout'
 include_recipe 'base::sysctl'
+include_recipe 'base::locale'
 include_recipe 'base::haveged'
 include_recipe 'base::hwraid'
 
 # systemd config and services
 include_recipe 'systemd::journald'
 include_recipe 'systemd::timezone'
-include_recipe 'systemd::locale'
 include_recipe 'systemd::machine'
 include_recipe 'systemd::rtc'
 
