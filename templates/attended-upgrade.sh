@@ -18,7 +18,10 @@ kill $(pidof apt-get)
 xapt update
 xapt dist-upgrade
 xapt dist-upgrade || exit 1
-<% if node['platform'] == 'ubuntu' %>
+<% if lxc? %>
+xapt purge linux-image-* linux-headers-* linux-tools-* linux-modules-* grub-common
+rm -rf /boot/grub
+<% else %>
 xapt install linux-{image,headers,tools}-generic-hwe-16.04-edge || exit 1
 xapt purge $(dpkg -l | egrep 'linux-(image|headers|tools)-4.4.0' | awk '{print $2}')
 <% end %>
