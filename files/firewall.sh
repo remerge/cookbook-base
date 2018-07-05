@@ -2,7 +2,7 @@
 
 # default policies
 /sbin/iptables -P INPUT DROP
-/sbin/iptables -P FORWARD DROP
+/sbin/iptables -P FORWARD ACCEPT
 /sbin/iptables -P OUTPUT ACCEPT
 
 /sbin/iptables -t nat -P PREROUTING ACCEPT
