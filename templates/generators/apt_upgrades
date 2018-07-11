@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo '# HELP apt_upgrades_pending Apt package pending updates'
+echo '# TYPE apt_upgrades_pending gauge'
+echo "apt_upgrades_pending $(/usr/bin/apt-get --just-print upgrade | grep ^Inst | wc -l)"

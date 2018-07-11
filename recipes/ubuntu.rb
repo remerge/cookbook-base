@@ -42,12 +42,17 @@ cookbook_file '/usr/sbin/lib_users' do
   mode '0755'
 end
 
+prometheus_generator 'lib_users'
+
 template '/usr/sbin/attended-upgrade' do
   source 'attended-upgrade.sh'
   owner 'root'
   group 'root'
   mode '0755'
 end
+
+prometheus_generator 'apt_upgrades'
+prometheus_generator 'reboot_required'
 
 cookbook_file '/usr/sbin/setup-network' do
   source 'setup-network'

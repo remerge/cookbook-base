@@ -19,6 +19,8 @@ node.force_default['resolver']['nameservers'] = [
   '8.8.4.4',
 ]
 
+prometheus_generator 'dns_query'
+
 include_recipe 'resolver'
 
 hostsfile_entry '127.0.1.1' do

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "# HELP lib_users_old_processes Processes using old libs"
+echo "# TYPE lib_users_old_processes gauge"
+echo "lib_users_old_processes $(lib_users | wc -l)"

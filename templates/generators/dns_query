@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "# HELP dns_query_time_seconds The time a DNS query for 'google.com' takes"
+echo "# TYPE dns_query_time_seconds gauge"
+
+for server in <%= node[:resolver][:nameservers].join(" ") %>
+do
+    ms=$(/usr/bin/dig @${server} | sed -n -e 's/.*Query time: \(.*\) msec.*/\1/p')
+    s=$(echo "scale=3; $ms/1000" | bc)
+    printf "dns_query_time_seconds{nameserver=\"$server\"} %0.3f\n" $s
+done

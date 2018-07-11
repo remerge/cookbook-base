@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "# HELP reboot_required If 1, the server needs a reboot."
+echo "# TYPE reboot_required gauge"
+
+if [ -f /var/run/reboot-required ]; then
+    echo 'reboot_required 1'
+else
+    echo 'reboot_required 0'
+fi
