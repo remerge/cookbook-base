@@ -3,6 +3,7 @@ node.force_default['java']['jdk_version'] = '8'
 node.force_default['java']['oracle']['accept_oracle_download_terms'] = true
 
 include_recipe 'java'
+include_recipe 'prometheus::jmx_exporter'
 
 cruft = [
   'openjdk-8-jre-headless',
