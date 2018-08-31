@@ -3,7 +3,7 @@
 
 # we don't need syslog
 
-systemd_service 'syslog.socket' do
+systemd_socket 'syslog' do
   action [:stop, :disable]
 end
 
