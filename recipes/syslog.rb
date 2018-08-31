@@ -2,7 +2,12 @@
 # include_recipe 'rsyslog'
 
 # we don't need syslog
-service "rsyslog" do
+
+systemd_socket 'syslog' do
+  action [:stop, :disable]
+end
+
+systemd_service 'rsyslog' do
   action [:stop, :disable]
 end
 
