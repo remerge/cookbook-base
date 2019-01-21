@@ -44,6 +44,30 @@ module ClusterHelper
       cluster_name ||= node.cluster_name
       node_search("cluster_name:#{cluster_name} AND (#{query})", filter)
     end
+
+    def kafka_nodes
+      nodes_as_string('roles:fh', 'fqdn', 9092)
+    end
+
+    def aerospike_nodes
+      nodes_as_string('roles:as', 'local_ipv4', 3000)
+    end
+
+    def hdfs_nodes
+      nodes_as_string('recipes:hadoop\:\:namenode', 'fqdn', 8020)
+    end
+
+    def dfc_node
+      "#{cluster_search("roles:dfc").first['fqdn']}:3121"
+    end
+
+    private
+
+    def nodes_as_string(query, attribute, port)
+      cluster_search(query).map do |n|
+        "#{n[attribute]}:#{port}" if n[attribute]
+      end.compact.join(',')
+    end
   end
 end
 
