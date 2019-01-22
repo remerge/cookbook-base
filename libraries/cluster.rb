@@ -58,7 +58,7 @@ module ClusterHelper
     end
 
     def cluster_dfc_node
-      "#{cluster_search("roles:dfc").first['fqdn']}:3121"
+      "#{cluster_search('roles:dfc').sample['fqdn']}:3121"
     end
 
     private
