@@ -68,7 +68,8 @@ cookbook_file '/usr/sbin/fix-fstab' do
   mode '0755'
 end
 
-# cleanup some ubuntu cruft we don't need
+# cleanup (remove/purge) some ubuntu cruft we don't need
+# but avoid removing "powermgmt-base" because this cascade-removes "unattended-upgrades", which we later ensure is installed
 purge_packages = %w(
   bind9
   bind9utils
@@ -76,7 +77,6 @@ purge_packages = %w(
   geoip-database
   openipmi
   os-prober
-  powermgmt-base
   snap-confine
   sshguard
   ubuntu-core-launcher
